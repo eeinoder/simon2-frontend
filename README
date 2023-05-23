@@ -1,0 +1,140 @@
+# README - Simon
+
+v1.2
+  New title font
+  Title font effects
+  Title, buttons, and button margins resize with window
+
+v2.0
+  Bug fixes with buttons staying pressed, being mis-clicked
+  Customizable hot keys. (must be alphanumeric, non-numpad)
+  TODO:
+  New custom buttons for "Start", "game mode" and "player stats"
+
+
+(NOW):
+-allow remote access (so can play on other devices)
+  (try configuring sshd, maybe use ngrok, labstack subdomain?)
+  (JUST SET UP RASPBERRY PI WEB SERVER)
+-->Disable button presses (i.e. hover/pressed effects) during sequence
+-hotkeys: more default configurations
+(DONE) toggle buttons: sound on/off, upload or save on/off
+-leaderboard: show leaderboard (get data from database)
+-full screen mode
+-dark mode / light mode (different colors)
+-->...sounds: loading and playing speed (try different techniques)
+
+
+--------------
+## BUGS:
+Button stays in pressed state (i.e. brightness 0.8) in mobile
+
+## Visual:
+Add buttons: Mute (sound off by default), Upload (on by default)
+--> Disable button presses (i.e. hover/pressed effects) during sequence
+Add gray gradient/ombre tone to window background, ombre colors to button colors
+Optimize for mobile (?)
+Change game mode buttons into one button with drop down menu (on hover/click)
+Custom svg buttons for layout, leaderboard, trophy buttons
+
+--> Hotkeys
+            - different default hot keys configurations (store as constants); change with layout changes
+            - add ability to change all hot keys quickly, one after another
+
+Light mode / Dark mode (?)
+
+## Gameplay:
+ (DONE) Userid field: only allow 3 letter input; add "i" info button -> "Input id before game start to save score with this id" (*Have users choose permanent id? Login?*)
+
+Do more efficient sound stuff (load in a lot, cycle through them ?)
+
+Have sound work for advanced mode too (fluid- add delay after correct input ?)
+--> Add sound (!)
+      - make them 70s/80s synth sounds (user can change?)
+      - you have a midi keyboard in the game (!!!) -> game: (see game mode ideas below)
+                                                   -> eggs: certain key sequences (either in game or/and not during game)
+                                                            will play song, change background, etc.
+--> Full screen mode (NOTE: will need to change how layout changes, i.e. by changing div width, to make this work)
+... & exit and restart buttons
+... should be different on mobile
+--> Add trophies
+
+Add "Player Score/ Career Points"... figure out conversion between number of buttons
+(Maybe) slider to change size of buttons
+***New button appears every N successful rounds*** *part of Gauntlet mode ?*
+Add "Quit/Reset" option to stop sequence in classic
+
+
+## BACKEND:
+GET leaderboard data (top 50?) in desired category. Add filter options? (!!!)
+Make database for user preferences, user progress/trophies/data, etc.
+
+
+
+## STYLE:
+--> Make button handlers/helpers for visual and audio effects on click (!!!)
+Change global names to 'g...' to track where they are used
+Put all event listeners in one file, all front-end game code in one, helper code in another etc.
+Be consistent with quote marks
+
+
+--------------
+(DONE)
+
+
+## BUGS:
+(FIXED) Weird results when you try to assign certain keys as hotkeys, e.g. space, backspace, ...
+(FIXED) ... & when you assign from left of current character
+(FIXED) Button stays highlighted after game loss
+
+## Visual:
+Add button layout options
+    (DONE) (** first: add buttons for testing: plus, minus, linear, square)
+    (DONE) Disable buttons during active game (e.g. if isGameStart...), or outside of bounds 2-12
+    (DONE) Handler - changes div width dimension, bttn display settings, etc. depending on layout;
+              (above: Linear: 2 rows, 6/row; Square: 3 rows, 3/row; adjust width as necessary)
+              updates colorMap, num_butts, etc.
+              (above: these can be done by an update() helper function)
+
+(DONE) Fix padding/margins of text elements
+(DONE) Custom buttons
+(DONE) Change game button colors
+
+## Gameplay:
+(DONE) Make different hi scores (adv and cla) for different button levels.
+(DONE) Add Leaderboard - make ***database***, prompt for user id/"nick name", save with score (Add SVG icon)
+
+(DONE) "Freeze" user input in middle of Classic sequence to avoid mis-click
+(DONE) Add keyboard functionality -> can enter key presses to play game.
+(DONE) Make hotkeys customizable (i.e. any alphanumeric key can be made a hotkey)
+... & make plugin to map all keys correctly (keyCode -> charCode)
+
+Add more Game Modes:
+  Reaction time game - sequence flashes, reproduce it; can be played 1v1 on on computer, or more on multiple devices
+  Rhythm game - maybe like "necrodancer", "guitar hero", "rhythm heaven fever" -
+
+## Backend:
+(DONE) Make databases for leaderboard
+
+
+
+## Eggs:
+--> If in square mode, 12 buttons, click rainbow (and not during game) -> buttons will do rainbow wave
+Make 1/100 chance title will be spelled "Simoan" -> click and moan sound effect plays
+--> certain sound
+(DONE) Rainbow title
+
+
+CODE NOTE(s):
+Using .style to get element attribute set with css .class selector will NOT give
+result. Must use getComputedStyle(),
+e.g. var style = window.getComputedStyle(obj); var color = obj.color;
+
+
+
+
+
+
+
+*italics* **bold** ***both***
+---------------

@@ -1,0 +1,305 @@
+/* TODO:
+simplify/consolidate style classes
+*/
+@font-face {
+    font-family: karmafuture;
+    src: url('fonts/karmafuture.ttf'),
+         url('fonts/karmafuture.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: karmasuture;
+    src: url('fonts/karmasuture.ttf'),
+         url('fonts/karmasuture.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+ /* Color hex codes */
+:root {
+  --red: #fc3636;
+  --green: #3feb4e;
+  --blue: #35a3fc;
+  --yellow: #fff200;
+  --cyan: #36fcfc;
+  --lavender: #9c90fd;
+  --pumpkin: #fc9936;
+  --violet: #ca36fc;
+  --purple: #6836fc;
+  --pink: #eb90fd;
+  --navy: #3668fc;
+  --orange: #fc6836;
+}
+
+html {
+  background: url('imgs/pink_grid.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /* filter: grayscale(1);  TODO: implement gray scale effect on opening leaderboard, like game state paused*/
+}
+
+.title_text {
+  position: relative;
+  font-family: karmafuture;
+  text-align: center;
+  color: #cc87b0;
+  margin-bottom: 1vw;
+  user-select: none;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 6vw;
+}
+
+h2 {
+  font-size: 3vw;
+}
+
+#config {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3vw;
+  width: 75%;
+}
+
+#buttons {
+  position: relative;
+  margin-bottom: 5vw;
+}
+
+#stats {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5vw;
+  width: 75%;
+}
+
+#headertools {
+  position: relative;
+  margin-bottom: 4vw;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+
+#toolbar {
+  border: 0.25vw solid black;
+  border-radius: 8px;
+  position: relative;
+  margin-bottom: 3vw;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  background-color: #c2c2c2;
+}
+
+#leaderboard {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  align-items: center;
+  border: 0.25vw solid black;
+  border-radius: 8px;
+  position: absolute;
+  margin: 1vw auto;
+  padding: 1vw 0;
+  width: 60%;
+  max-height: 25vw;
+  background-color: #c2c2c2;
+  z-index: 3;
+}
+
+.leaderboard_text {
+  font-family: karmasuture;
+  font-size: 1.5vw;
+}
+
+/* Make text, like the title, non-highlightable. */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version */
+}
+/* Default state for more than 4 buttons */
+.hidden {
+  display: none;
+}
+
+.floatR {
+  float: right;
+}
+
+.gray {
+  filter: opacity(70%);
+}
+
+.filterGrayscale {
+  filter: grayscale(1);
+}
+
+.gamebutton {
+  border: none;
+  border-radius: 8px;
+  width: 15vw;            /* CHANGE BUTTON W&H TO AFFECT LAYOUT/ VIEW */
+  height: 10vw;
+  margin: 0.25vw 0.25vw;
+  color: white;
+  opacity: 0.5;
+  cursor: pointer;
+  filter: saturate(100%);
+}
+
+#row1 {width: 100%;}      /* NOTE: 100% default for linear layout, 40% for square */
+#row2 {width: 75%;}      /* NOTE: rows 2 and 3 not being used; saved for alt implementation of button layout */
+#row3 {width: 75%;}
+
+#red.gamebutton {
+  background-color: var(--red);
+  /*background: url('imgs/gradient1.png') no-repeat;
+  background-size: contain;*/
+}
+#green.gamebutton {
+  background-color: var(--green);
+  /*background: url('imgs/gradient2.png') no-repeat;
+  background-size: contain;*/
+}
+#blue.gamebutton {
+  background-color: var(--blue);
+  /*background: url('imgs/gradient3.png') no-repeat;
+  background-size: contain;*/
+}
+#yellow.gamebutton {
+  background-color: var(--yellow);
+  /*background: url('imgs/gradient4.png') no-repeat;
+  background-size: contain;*/
+}
+
+#cyan.gamebutton {background-color: var(--cyan);}
+#lavender.gamebutton {background-color: var(--lavender);}
+#pumpkin.gamebutton {background-color: var(--pumpkin);}
+#violet.gamebutton {background-color: var(--violet);}
+
+#purple.gamebutton {background-color: var(--purple);}
+#pink.gamebutton {background-color: var(--pink);}
+#navy.gamebutton {background-color: var(--navy);}
+#orange.gamebutton {background-color: var(--orange);}
+
+.otherbutton {
+  font-family: karmasuture;
+  font-size: 1.5vw;
+  border: 0.25vw solid black;
+  border-radius: 4px;
+  font-size: 1.5vw;
+  width: 8vw;
+  height: 3.5vw;
+  color: white;
+  opacity: 1.0;
+  background-color: #808080;
+  cursor: pointer;
+}
+
+#start {
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: #5cb8d6;
+}
+#help.otherbutton {
+  width: 3vw;
+}
+#advanced {
+  width: 9vw;
+}
+#hotkeysButton.otherbutton {
+  width: 12vw;
+}
+#statsButton.otherbutton {
+  width: 14vw;
+}
+
+.toolbutton {
+  border: none;
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  width: 5vw;
+  height: 5vw;
+  margin: 0.25vw 1.5vw;
+  color: white;
+  cursor: pointer;
+}
+.headertool {
+  margin: 0 0;
+  width: 3vw;
+  height: 3vw;
+}
+
+#muteButton {
+  background-image: url("icons/mute_black.svg");
+}
+#unmuteButton {
+  background-image: url("icons/unmute_black.svg");
+}
+#saveOnButton {
+  background-image: url("icons/save_on.png");
+}
+#saveOffButton {
+  background-image: url("icons/save_off.png");
+  width: 4.7vw;
+  height: 4.7vw;
+  margin: -0.75vw -0.85vw;
+}
+
+#rankButton {
+  background-image: url("icons/podium_minimal.svg");
+}
+#linLayout {
+  background-image: url("icons/lines_sharp.svg");
+}
+#sqLayout {
+  background-image: url("icons/squares_filled.svg");;
+}
+#subButton {
+  background-image: url("icons/minus.svg");
+  margin-left: 22vw;
+}
+#addButton {
+  background-image: url("icons/plus.svg");
+}
+
+.hotkeysBox {
+  font-family: karmasuture;
+  font-size: 1.5vw;
+  margin-bottom: 1vw;
+  width: 3.5vw;
+}
+#hotkeysButton {
+  margin-bottom: 12px;
+}
+
+.settings {
+  font-family: karmasuture;
+  font-size: 1.5vw;
+}
+
+.info {
+  font-family: karmasuture;
+  font-size: 1.5vw;
+}
+
+.usrid {
+  font-family: karmasuture;
+  font-size: 1.5vw;
+  width: 3.5vw;
+}
