@@ -1,6 +1,6 @@
 // Client -> Backend API calls
 
-const base_url = 'http://localhost:5050';
+const base_url = 'https://express-server-mjaz.onrender.com';
 // TODO: change url to heroku once backend deployed
 
 async function getLeaderboardScoresBackend(game_mode, num_buttons) {
