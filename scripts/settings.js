@@ -103,9 +103,9 @@ function updateHotkeys() {
 
 function updateDisplaySettings() {
   // num_butts is number of visible buttons. change div width according to layout (lin or sq).
-  var buttonContainer = document.getElementById("row1");
+  var buttonContainer = document.getElementById("button-container");
   if (display_mode === "linear") {
-    if (num_butts < 6 || num_butts > 10) {
+    /*if (num_butts < 6 || num_butts > 10) {
       buttonContainer.style.width = "100%";
     }
     else if (num_butts === 6) {
@@ -116,14 +116,15 @@ function updateDisplaySettings() {
     }
     else {
       buttonContainer.style.width = "85%";
-    }
+    }*/
+    buttonContainer.style.width = "90%";
   }
   else if (display_mode === "square") {
     if (num_butts < 5) {
-      buttonContainer.style.width = "40%";
+      buttonContainer.style.width = "50%";
     }
     else if (num_butts < 10) {
-      buttonContainer.style.width = "50%";
+      buttonContainer.style.width = "65%";
     }
     else {
       buttonContainer.style.width = "65%";
@@ -281,7 +282,7 @@ hotInputs.addEventListener('input', (event) => {
 
 
 /* MUTE AND SOUND BUTTONS LISTENER */
-const muteButton = document.getElementById("muteButton");
+/*const muteButton = document.getElementById("muteButton");
 const unmuteButton = document.getElementById("unmuteButton");
 //const saveOnButton = document.getElementById("saveOnButton");
 //const saveOffButton = document.getElementById("saveOffButton");
@@ -298,7 +299,7 @@ unmuteButton.addEventListener('click', (event) => {
   muteButton.classList.remove("hidden");
   unmuteButton.classList.add("hidden");
   isSoundOn = 0;
-})
+})*/
 /*saveOnButton.addEventListener('click', (event) => {
   // Click saveOn -> saveOff. Save/upload to db is off.
   saveOffButton.classList.remove("hidden");
@@ -395,7 +396,7 @@ function addScoreToLeaderboardDiv(userscore_str) {
   leaderboard_div.appendChild(new_score_div);
   new_score_div.className = 'leaderboard_text';
   new_score_div.innerHTML = userscore_str;
-} 
+}
 function clearLeaderboardDiv() {
   const leaderboard_div = document.getElementById("scores_list");
   while (leaderboard_div.firstChild) {
@@ -407,7 +408,7 @@ function clearLeaderboardDiv() {
 document.body.addEventListener('click', () => {
   leaderboard.style.visibility = 'hidden';
   document.body.classList.remove("filterGrayscale");
-}, true); 
+}, true);
 
 
 

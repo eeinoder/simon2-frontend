@@ -1,6 +1,7 @@
 /* TODO:
 simplify/consolidate style classes
 */
+
 @font-face {
     font-family: karmafuture;
     src: url('fonts/karmafuture.ttf'),
@@ -12,6 +13,12 @@ simplify/consolidate style classes
     font-family: karmasuture;
     src: url('fonts/karmasuture.ttf'),
          url('fonts/karmasuture.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: PixelifySans;
+    src: url('fonts/PixelifySans-Regular.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -37,24 +44,24 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  /* filter: grayscale(1);  TODO: implement gray scale effect on opening leaderboard, like game state paused*/
+  /* filter: grayscale(1);  TODO: implement gray scale effect on opening leaderboard, like game state paused */
 }
 
 .title_text {
   position: relative;
-  font-family: karmafuture;
+  font-family: PixelifySans;
   text-align: center;
   color: #cc87b0;
   margin-bottom: 1vw;
   user-select: none;
-  width: 40%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
 }
 
 h1 {
-  font-size: 6vw;
+  font-size: 10vw;
 }
 
 h2 {
@@ -98,7 +105,7 @@ h2 {
   margin-left: auto;
   margin-right: auto;
   width: 75%;
-  background-color: #c2c2c2;
+  background-color: #949494;
 }
 
 #leaderboard {
@@ -115,6 +122,18 @@ h2 {
   max-height: 25vw;
   background-color: #c2c2c2;
   z-index: 3;
+}
+
+#gamecontainer {
+  border: 0.25vw solid black;
+  border-radius: 8px;
+  position: relative;
+  margin-bottom: 3vw;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  background-color: #949494;
+  padding: 20px 0;
 }
 
 .leaderboard_text {
@@ -151,18 +170,21 @@ h2 {
 .gamebutton {
   border: none;
   border-radius: 8px;
-  width: 15vw;            /* CHANGE BUTTON W&H TO AFFECT LAYOUT/ VIEW */
+  width: 15vw;
   height: 10vw;
   margin: 0.25vw 0.25vw;
   color: white;
   opacity: 0.5;
-  cursor: pointer;
   filter: saturate(100%);
+  cursor: pointer;
 }
 
-#row1 {width: 100%;}      /* NOTE: 100% default for linear layout, 40% for square */
-#row2 {width: 75%;}      /* NOTE: rows 2 and 3 not being used; saved for alt implementation of button layout */
-#row3 {width: 75%;}
+#button-container {
+  width: 90%;
+  background: black;
+  padding: 1.5vw;
+  border-radius: 8px;
+}      /* NOTE: 100% default for linear layout, 40% for square */
 
 #red.gamebutton {
   background-color: var(--red);
@@ -302,4 +324,8 @@ h2 {
   font-family: karmasuture;
   font-size: 1.5vw;
   width: 3.5vw;
+}
+
+.footer {
+  color: grey;
 }

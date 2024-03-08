@@ -1,7 +1,7 @@
 // Client -> Backend API calls
 
 const base_url = 'https://express-server-mjaz.onrender.com';
-// TODO: change url to heroku once backend deployed
+// Render backend deployment url
 
 async function getLeaderboardScoresBackend(game_mode, num_buttons) {
     await fetch(`${base_url}/leaderboard/${game_mode}-${num_buttons}`)

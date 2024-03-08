@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--meta http-equiv="X-UA-Compatible" content="ie=edge-->
+  <title>Simone Game</title>
   <link rel="stylesheet" href="style/stylesheet.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -9,8 +13,8 @@
 <h1 id="title" class="noselect title_text">Simone</h1>
 
 <div id="headertools">
-  <button class="toolbutton headertool floatR" id="muteButton"></button>
-  <button class="toolbutton headertool floatR hidden" id="unmuteButton"></button>
+  <!-- button class="toolbutton headertool floatR" id="muteButton"></button-->
+  <!--button class="toolbutton headertool floatR hidden" id="unmuteButton"></button-->
   <!--button class="toolbutton headertool floatR" id="saveOnButton"></button-->
   <!--button class="toolbutton headertool floatR hidden" id="saveOffButton"></button-->
 </div>
@@ -33,73 +37,72 @@
 
 </div>
 
+<div id="gamecontainer">
 
-<!-- START & GAME M0DE BUTTONS, AND SCORE CARDS -->
-<div id="config">
-  <button class="otherbutton" id="start">Start</button>
+  <!-- START & GAME M0DE BUTTONS, AND SCORE CARDS -->
+  <div id="config">
+    <button class="otherbutton" id="start">Start</button>
 
-  <button class="otherbutton floatR" id="help">?</button>
-  <button class="otherbutton floatR" id="advanced">Advanced</button>
-  <button class="otherbutton floatR" id="classic">Classic</button>
-  <p class="info" id="hi-score">High Score:</p>
-  <span class="info modeButton floatR" id="mode">Game Mode:</span>
-  <p class="info" id="score">Score:</p>
-  <span class="info modeButton floatR" id="layout">Layout:</span>
-  <label class="usrid label" for="usridText" id="usridLabel">User:</label>
-  <input class="usrid text" type="text" id="usridText" name="usridText" value="TMP">
-</div>
-
-
-<!-- GAME BUTTONS -->
-<div align="center" id="buttons">
-  <div id="row1">
-    <button class="gamebutton" id="red"></button>
-    <button class="gamebutton" id="green"></button>
-    <button class="gamebutton" id="blue"></button>
-    <button class="gamebutton" id="yellow"></button>
-    <button class="gamebutton hidden" id="cyan"></button>
-    <button class="gamebutton hidden" id="lavender"></button>
-    <button class="gamebutton hidden" id="pumpkin"></button>
-    <button class="gamebutton hidden" id="violet"></button>
-    <button class="gamebutton hidden" id="purple"></button>
-    <button class="gamebutton hidden" id="pink"></button>
-    <button class="gamebutton hidden" id="navy"></button>
-    <button class="gamebutton hidden" id="orange"></button>
+    <button class="otherbutton floatR" id="help">?</button>
+    <button class="otherbutton floatR" id="advanced">Advanced</button>
+    <button class="otherbutton floatR" id="classic">Classic</button>
+    <p class="info" id="hi-score">High Score:</p>
+    <span class="info modeButton floatR" id="mode">Game Mode:</span>
+    <p class="info" id="score">Score:</p>
+    <span class="info modeButton floatR" id="layout">Layout:</span>
+    <label class="usrid label" for="usridText" id="usridLabel">User:</label>
+    <input class="usrid text" type="text" id="usridText" name="usridText" value="TMP">
   </div>
-  <div id="row2">
-  </div>
-  <div id="row3">
-  </div>
-</div>
 
 
-<!-- STATS AND HOTKEYS -->
-<div id=statsAndKeys>
-  <div id="stats">
-    <button class="otherbutton settings" id="statsButton">Player Stats:</button>
-    <div class="hotkeys floatR">
-      <button class="otherbutton" id="hotkeysButton">Hot Keys:</button>
-      <form id="hotBox" style="visibility:hidden">
-        <label class="hotkeysBox label" for="red" style="padding-right:3.75vw">Red:</label>
-        <input class="hotkeysBox text" type="text" id="redText" name="red" value="U"><br>
-        <label class="hotkeysBox label" for="green" style="padding-right:2.5vw">Green:</label>
-        <input class="hotkeysBox text" type="text" id="greenText" name="green" value="I"><br>
-        <label class="hotkeysBox label" for="blue" style="padding-right:3.35vw">Blue:</label>
-        <input class="hotkeysBox text" type="text" id="blueText" name="blue" value="O"><br>
-        <label class="hotkeysBox label" for="yellow" style="padding-right:2.45vw">Yellow:</label>
-        <input class="hotkeysBox text" type="text" id="yellowText" name="yellow" value="P"><br>
-      </form>
+  <!-- GAME BUTTONS -->
+  <div align="center" class="noselect" id="buttons">
+    <div id="button-container">
+      <button class="gamebutton" id="red"></button>
+      <button class="gamebutton" id="green"></button>
+      <button class="gamebutton" id="blue"></button>
+      <button class="gamebutton" id="yellow"></button>
+      <button class="gamebutton hidden" id="cyan"></button>
+      <button class="gamebutton hidden" id="lavender"></button>
+      <button class="gamebutton hidden" id="pumpkin"></button>
+      <button class="gamebutton hidden" id="violet"></button>
+      <button class="gamebutton hidden" id="purple"></button>
+      <button class="gamebutton hidden" id="pink"></button>
+      <button class="gamebutton hidden" id="navy"></button>
+      <button class="gamebutton hidden" id="orange"></button>
     </div>
-    <div id="statsBox" style="visibility:hidden">
-      <p class="settings">Button Level:<span id="numButtons" style="padding-left:7vw"><span></p>
-      <p class="settings">High Score (Classic):<span id="hiScoreCla" style="padding-left:2.8vw"><span></p>
-      <p class="settings">High Score (Advanced):<span id="hiScoreAdv" style="padding-left:1.7vw"><span></p>
-      <p class="settings">Games Played:<span id="numGames" style="padding-left:6.95vw"><span></p>
-      <p class="settings">Buttons Clicked:<span id="numClicks" style="padding-left:5.7vw"><span></p>
     </div>
   </div>
 
-  <h2 id="subtitle" class="noselect title_text">by: Nicolae E.</h2>
+
+  <!-- STATS AND HOTKEYS -->
+  <div id=statsAndKeys>
+    <div id="stats">
+      <button class="otherbutton settings" id="statsButton">Player Stats:</button>
+      <div class="hotkeys floatR">
+        <button class="otherbutton" id="hotkeysButton">Hot Keys:</button>
+        <form id="hotBox" style="visibility:hidden">
+          <label class="hotkeysBox label" for="red" style="padding-right:3.75vw">Red:</label>
+          <input class="hotkeysBox text" type="text" id="redText" name="red" value="U"><br>
+          <label class="hotkeysBox label" for="green" style="padding-right:2.5vw">Green:</label>
+          <input class="hotkeysBox text" type="text" id="greenText" name="green" value="I"><br>
+          <label class="hotkeysBox label" for="blue" style="padding-right:3.35vw">Blue:</label>
+          <input class="hotkeysBox text" type="text" id="blueText" name="blue" value="O"><br>
+          <label class="hotkeysBox label" for="yellow" style="padding-right:2.45vw">Yellow:</label>
+          <input class="hotkeysBox text" type="text" id="yellowText" name="yellow" value="P"><br>
+        </form>
+      </div>
+      <div id="statsBox" style="visibility:hidden">
+        <p class="settings">Button Level:<span id="numButtons" style="padding-left:7vw"><span></p>
+        <p class="settings">High Score (Classic):<span id="hiScoreCla" style="padding-left:2.8vw"><span></p>
+        <p class="settings">High Score (Advanced):<span id="hiScoreAdv" style="padding-left:1.7vw"><span></p>
+        <p class="settings">Games Played:<span id="numGames" style="padding-left:6.95vw"><span></p>
+        <p class="settings">Buttons Clicked:<span id="numClicks" style="padding-left:5.7vw"><span></p>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="subtitle" class="noselect title_text footer">by: Nicolae E.</h2>
 </div>
 
 
