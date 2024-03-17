@@ -536,6 +536,7 @@ leaderboardListener.addEventListener('click', (event) => {
   // Toggle leaderboard window
   if (isHidden) {
     // TODO: keep cache of db data, only make new fetch request if player has new high score and/or after timer elapsed (1 min?)
+    clearLeaderboardDiv();
     loading_msg.innerHTML = "Loading...";
     getLeaderboardScoresBackend(game_mode, num_butts); // TODO -- load default values if err?
     leaderboardContainer.classList.remove("hidden");
@@ -547,7 +548,6 @@ leaderboardListener.addEventListener('click', (event) => {
 function formatAndRenderScoresList(userscores_data) {
   loading_msg.innerHTML = "";
   if (userscores_data !== undefined) {
-    clearLeaderboardDiv();
     userscores_data.forEach((entry) => {
       var userscore_str = `${entry["user_id"]} ----- ${entry["score"]}`;
       addScoreToLeaderboardDiv(userscore_str);
