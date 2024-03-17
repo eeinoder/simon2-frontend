@@ -36,6 +36,7 @@ simplify/consolidate style classes
   --pink: #eb90fd;
   --navy: #3668fc;
   --orange: #fc6836;
+  --grey: rgb(240,240,240);
 }
 
 html {
@@ -51,34 +52,20 @@ html {
   position: relative;
   font-family: PixelifySans;
   text-align: center;
-  color: #cc87b0;
-  margin-bottom: 1vw;
   user-select: none;
   width: 70%;
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
 }
-
-h1 {
-  font-size: 10vw;
+#title {
+  color: #cc87b0;
+  margin-bottom: 0;
+  font-size: clamp(2rem, 8vw, 6rem);
 }
-
-h2 {
-  font-size: 3vw;
-}
-
-#config {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 3vw;
-  width: 75%;
-}
-
-#buttons {
-  position: relative;
-  margin-bottom: 5vw;
+#subtitle {
+  /*color: grey;*/
+  font-size: clamp(1rem, 2.5vw, 3rem);
 }
 
 #stats {
@@ -89,15 +76,45 @@ h2 {
   width: 75%;
 }
 
-#headertools {
+#headerbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   position: relative;
-  margin-bottom: 4vw;
+  margin-top: 4vw;
+  margin-bottom: 1vw;
   margin-left: auto;
   margin-right: auto;
   width: 75%;
+
+  color: white;
+  font-size: clamp(0.5rem, 2vw, 4rem);
+}
+.usrid-container {
+  padding-left: 25px;
+  font-family: karmasuture;
+}
+#usridText {
+  font-size: clamp(0.5rem, 2vw, 4rem);
+}
+.usrid {
+  width: 5vw;
+}
+.current-scores-container {
+  width: 35%;
+  padding-right: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: karmasuture;
 }
 
 #toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   border: 0.25vw solid black;
   border-radius: 8px;
   position: relative;
@@ -105,9 +122,72 @@ h2 {
   margin-left: auto;
   margin-right: auto;
   width: 75%;
-  background-color: #949494;
+  height: 5svh;
+  /*background-color: #949494;*/
+  background-color: black;
+}
+.toolbutton-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60%;
+  width: 32%;
+}
+.toolbutton {
+  font-family: karmasuture;
+  border: none;
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  /*width: 5vw;*/
+  height: 100%;
+  margin: 0.25vw 1.5vw;
+  font-size: clamp(0.8rem, 1.5vw, 2rem);
+  color: white;
+  cursor: pointer;
+}
+.toolbutton > img {
+  height: 100%;
+  width: auto;
 }
 
+.gamemode-select-modal-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background: rgb(0,0,0,0.4);
+  z-index: 2;
+}
+#gamemode-select-modal {
+  padding: 3vw;
+  margin-top: 25svh;
+  font-family: karmasuture;
+  font-size: clamp(0.8rem, 1.5vw, 3rem);
+  max-width: 50%;
+  border-radius: 8px;
+  background: var(--grey);
+}
+
+.leaderboard-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background: rgb(0,0,0,0.4);
+  z-index: 2;
+}
 #leaderboard {
   display: flex;
   flex-direction: column;
@@ -115,30 +195,100 @@ h2 {
   align-items: center;
   border: 0.25vw solid black;
   border-radius: 8px;
+  /*margin: 1vw auto;*/
+  margin-top: 25svh;
+  padding: 4vw;
+  width: 50%;
+  /*height: clamp(300px, 50svh, 600px);*/
+  max-height: 600px;
+  background-color: var(--grey);
+}
+#scores-list {
+  margin-top: 3svh;
+}
+
+.menu-modal-container {
   position: absolute;
-  margin: 1vw auto;
-  padding: 1vw 0;
-  width: 60%;
-  max-height: 25vw;
-  background-color: #c2c2c2;
-  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background: rgb(0,0,0,0.4);
+  z-index: 2;
+}
+#menu-modal {
+  padding: 3vw;
+  margin-top: 25svh;
+  font-family: karmasuture;
+  font-size: clamp(0.8rem, 1.5vw, 3rem);
+  max-width: 50%;
+  border-radius: 8px;
+  background: var(--grey);
+}
+#statsBox {
+  width: 90%;
+}
+#hotBox {
+  width: 90%;
+}
+.hotkeysBox.text {
+  font-size: clamp(0.8rem, 1.5vw, 3rem);
+  width: 2vw;
+  text-align: center;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #gamecontainer {
-  border: 0.25vw solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
   border-radius: 8px;
   position: relative;
   margin-bottom: 3vw;
   margin-left: auto;
   margin-right: auto;
-  width: 75%;
-  background-color: #949494;
-  padding: 20px 0;
+  width: 75vw;
+  height: 50svh;
+  background: rgb(0,0,0,0.2);
+  /*padding: 20px 0;*/
+}
+#button-container {
+  /*display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;*/
+  background: black;
+  padding-top: 10px;
+  border-radius: 8px;
+}      /* NOTE: 100% default for linear layout, 40% for square */
+.gamebutton {
+  /*display: inline-block;*/
+  border: none;
+  border-radius: 8px;
+  width: 16vw;
+  height: 16vw;
+  margin: 5px;
+  color: black;
+  opacity: 0.5;
+  filter: saturate(100%);
+  font-size: clamp(1rem, 5vw, 4rem);
+  cursor: pointer;
 }
 
-.leaderboard_text {
+
+.leaderboard-text {
   font-family: karmasuture;
-  font-size: 1.5vw;
+  font-size: clamp(1rem, 2vw, 4rem);
 }
 
 /* Make text, like the title, non-highlightable. */
@@ -159,32 +309,13 @@ h2 {
   float: right;
 }
 
-.gray {
-  filter: opacity(70%);
+.white {
+  filter: invert(100%) sepia(6%) saturate(7500%) hue-rotate(265deg) brightness(108%) contrast(109%);
 }
 
 .filterGrayscale {
   filter: grayscale(1);
 }
-
-.gamebutton {
-  border: none;
-  border-radius: 8px;
-  width: 15vw;
-  height: 10vw;
-  margin: 0.25vw 0.25vw;
-  color: white;
-  opacity: 0.5;
-  filter: saturate(100%);
-  cursor: pointer;
-}
-
-#button-container {
-  width: 90%;
-  background: black;
-  padding: 1.5vw;
-  border-radius: 8px;
-}      /* NOTE: 100% default for linear layout, 40% for square */
 
 #red.gamebutton {
   background-color: var(--red);
@@ -219,28 +350,19 @@ h2 {
 
 .otherbutton {
   font-family: karmasuture;
-  font-size: 1.5vw;
   border: 0.25vw solid black;
   border-radius: 4px;
-  font-size: 1.5vw;
-  width: 8vw;
-  height: 3.5vw;
+  font-size: clamp(0.8rem, 1.5vw, 3rem);
+  width: clamp(80px, 8vw, 160px);
+  height: clamp(25px, 3.5vw, 50px);
   color: white;
   opacity: 1.0;
   background-color: #808080;
   cursor: pointer;
 }
 
-#start {
-  font-weight: bold;
-  border-radius: 6px;
-  background-color: #5cb8d6;
-}
 #help.otherbutton {
   width: 3vw;
-}
-#advanced {
-  width: 9vw;
 }
 #hotkeysButton.otherbutton {
   width: 12vw;
@@ -249,18 +371,6 @@ h2 {
   width: 14vw;
 }
 
-.toolbutton {
-  border: none;
-  background: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 70%;
-  width: 5vw;
-  height: 5vw;
-  margin: 0.25vw 1.5vw;
-  color: white;
-  cursor: pointer;
-}
 .headertool {
   margin: 0 0;
   width: 3vw;
@@ -283,6 +393,20 @@ h2 {
   margin: -0.75vw -0.85vw;
 }
 
+#start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: #5cb8d6;
+  width: fit-content;
+  padding: 1vw;
+}
+#gamemode-select-button {
+  font-size: clamp(0.8rem, 3vw, 2rem);
+}
+/*
 #rankButton {
   background-image: url("icons/podium_minimal.svg");
 }
@@ -294,38 +418,11 @@ h2 {
 }
 #subButton {
   background-image: url("icons/minus.svg");
-  margin-left: 22vw;
 }
 #addButton {
   background-image: url("icons/plus.svg");
 }
-
-.hotkeysBox {
-  font-family: karmasuture;
-  font-size: 1.5vw;
-  margin-bottom: 1vw;
-  width: 3.5vw;
+#menuButton {
+  background-image: url("icons/lines_sharp.svg");
 }
-#hotkeysButton {
-  margin-bottom: 12px;
-}
-
-.settings {
-  font-family: karmasuture;
-  font-size: 1.5vw;
-}
-
-.info {
-  font-family: karmasuture;
-  font-size: 1.5vw;
-}
-
-.usrid {
-  font-family: karmasuture;
-  font-size: 1.5vw;
-  width: 3.5vw;
-}
-
-.footer {
-  color: grey;
-}
+*/

@@ -3,9 +3,10 @@ var start_butt = document.getElementById('start');
 start_butt.addEventListener('click', startGame);
 
 function startGame() {
+  console.log("GAME STARTED")
   if (isGameStart === 1) {
     // cannot Start a game while one is in progress OR if mode is not selected.
-    alert("Game is already in progress.");
+    alert("Game already in progress.");
     return;
   }
   if (game_mode === null) {
@@ -184,12 +185,12 @@ function keyPressHandler(event) {
     else if (keyCode === 67 || keyCode === 65) { // "C" or "A", resp.
       toggleMode(event);
     }
-    else if (keyCode === 83) { // "S"
+    /*else if (keyCode === 83) { // "S"
       if (event.type === "keydown") {toggleStatsBox();}
     }
     else if (keyCode === 88) { // "X"
       if (event.type === "keydown") {toggleHotBox();}
-    }
+    }*/
   }
   else {                          // A color hotkey.
     if (event.type === "keydown") {
@@ -214,8 +215,10 @@ function keyPressHandler(event) {
 
 
 
+// TODO: NEED TO ADD TOUCH EVENTS FOR MOBILE
+
 /* GAME BUTTONS EVENT LISTENER */
-const wrapper = document.getElementById('buttons');
+const wrapper = document.getElementById('button-container');
 wrapper.addEventListener('mousedown', (event) => {      // Register click and
   const isButton = event.target.nodeName === 'BUTTON';  // do click effects.
   if (!isButton) {return;}

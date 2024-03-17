@@ -8,7 +8,7 @@ var usrRank; // Rank on leaderboard for current button level (?).
 const protected = [13, 83, 88, 67, 65];
 const linHotkeyConfigs = [];
 const sqHotkeyConfigs = [];
-var hotKeys = [85, 73, 79, 80]; // Default hotkey configuration (for 4 linear buttons)
+var hotKeys = [73, 79, 75, 76]; // Default hotkey configuration (for 4 linear buttons)
 
 var currKeyCode;  // keyCode of key that's just been pressed
 // Protected keys: 13:Enter-"Start", 83:S-"Stats", 88:"Hotkeys", 67:C-"Classic", 65:A-"Advanced"
@@ -16,6 +16,7 @@ var currKeyCode;  // keyCode of key that's just been pressed
 //    NOTE: index matters, i=0 is red, 1=green, 2=blue, 3=yellow
 
 // Options for game and display modes.
+const game_types = ["colors", "numbers"];
 const game_modes = ["classic", "advanced"];
 const diplay_modes = ["linear", "square"];
 
@@ -33,6 +34,7 @@ var isInFieldBox = 0; //if user clicks into box, var=1, keyPress listener stops 
 var num_butts = 4;  // Default is 4 on start up
 var game_mode = "classic"; // Default game mode is "classic"
 var display_mode = "linear"; // Default display mode is "linear"
+var game_type = "colors";
 var buttons_clicked = 0;
 var games_played = 0;
 
@@ -68,16 +70,23 @@ $(document).ready(startupSettings());
 
 // Welcome message and set user id reminder on page load
 window.onload = () => {
-  alert("Welcome! Please set a User ID (3 letters max) for your high scores to be displayed on the Global Leaderboard.")
+  setTimeout(() => {
+    alert("Welcome! Please set a User ID (3 letters max) for your high scores to be displayed on the Global Leaderboard.")
+  }, 500);
 };
+
+// NOTE: this is new implementation of layout toggle
+window.onresize = () => {
+  updateDisplaySettings();
+}
 
 function startupSettings() {
   // TODO: Change this so that it actually looks for these from a database
   // Game score, mode, and layout settings.
   document.getElementById("hi-score").innerHTML = "High Score: " + hi_score_cla;
   document.getElementById("score").innerHTML = "Score: " + curr_score;
-  document.getElementById("mode").innerHTML = "Game Mode: " + game_mode.toUpperCase();
-  document.getElementById("layout").innerHTML = "Layout: " + display_mode.toUpperCase();
+  document.querySelector("#gamemode-select-button").innerHTML = `${game_mode.toUpperCase().substring(0,3)}. &#9662;`;
+  //document.getElementById("layout").innerHTML = "Layout: " + display_mode.toUpperCase();
   // Player Stats.
   usrID = "TMP"; // Default user id.
   document.getElementById("numButtons").innerHTML = num_butts;
@@ -101,40 +110,128 @@ function updateHotkeys() {
   // ALSO, hide/show those labels+fields as necessary
 }
 
+
 function updateDisplaySettings() {
   // num_butts is number of visible buttons. change div width according to layout (lin or sq).
-  var buttonContainer = document.getElementById("button-container");
-  if (display_mode === "linear") {
-    /*if (num_butts < 6 || num_butts > 10) {
-      buttonContainer.style.width = "100%";
-    }
-    else if (num_butts === 6) {
-      buttonContainer.style.width = "50%";
-    }
-    else if (num_butts < 9) {
-      buttonContainer.style.width = "65%";
-    }
-    else {
-      buttonContainer.style.width = "85%";
-    }*/
-    buttonContainer.style.width = "90%";
+  let gameContainer = document.getElementById("gamecontainer");
+  let gameContainerWidth = gameContainer.offsetWidth;
+  let gameContainerHeight = gameContainer.offsetHeight;
+  let gameContainerMinDimension = Math.min(gameContainerWidth, gameContainerHeight); // px units
+  let buttonContainer = document.getElementById("button-container");
+
+  let buttonMargin = 20;
+  let buttonDimension;
+  let buttonsPerRow;
+  let buttonsPerCol;
+
+  if (num_butts == 2) {
+    buttonsPerRow = 2;
+    buttonsPerCol = 1;
   }
-  else if (display_mode === "square") {
-    if (num_butts < 5) {
-      buttonContainer.style.width = "50%";
-    }
-    else if (num_butts < 10) {
-      buttonContainer.style.width = "65%";
-    }
-    else {
-      buttonContainer.style.width = "65%";
-    }
+  else if (num_butts <= 4) {
+    buttonsPerRow = 2;
+    buttonsPerCol = 2;
+  }
+  else if (num_butts <= 6) {
+    buttonsPerRow = 3;
+    buttonsPerCol = 2;
+  }
+  else if (num_butts <= 9) {
+    buttonsPerRow = 3;
+    buttonsPerCol = 3;
+  }
+  else if (num_butts <= 12) {
+    buttonsPerRow = 4;
+    buttonsPerCol = 3;
   }
   else {
-    alert("Display mode error.")
-    return;
+    // TODO
   }
+
+  // Set button dimensions dynamically
+  buttonDimension = Math.min(gameContainerWidth/buttonsPerRow, gameContainerHeight/buttonsPerCol) - buttonMargin;
+  buttonContainer.style.width = buttonsPerRow * (buttonDimension + buttonMargin) + "px";
+  buttonContainer.style.height = buttonsPerCol * (buttonDimension + buttonMargin) + "px";
+  document.querySelectorAll(".gamebutton").forEach(gamebutton => {
+    gamebutton.style.width = `${buttonDimension}px`;
+    gamebutton.style.height = `${buttonDimension}px`;
+  })
+  // Make buttonContainer visible (hidden on startup until buttons properly loaded)
+  buttonContainer.classList.remove("hidden");
 }
+
+
+// NOTE: OLD DISPLAY SETTINGS BELOW. NOW DEFAULT IS 'SQUARE' LAYOUT REGARDLESS OF WINDOW SIZE
+/*function updateDisplaySettings() {
+  // Dyamically change layout based on window size
+  if (window.innerWidth <= 1200 && display_mode === "linear") {
+    display_mode = "square";
+  }
+  else if (window.innerWidth > 1200 && display_mode === "square") {
+    display_mode = "linear";
+  }
+  // num_butts is number of visible buttons. change div width according to layout (lin or sq).
+  let gameContainer = document.getElementById("gamecontainer");
+  let gameContainerWidth = gameContainer.offsetWidth;
+  let gameContainerHeight = gameContainer.offsetHeight;
+  let gameContainerMinDimension = Math.min(gameContainerWidth, gameContainerHeight); // px units
+  let buttonContainer = document.getElementById("button-container");
+
+  let buttonMargin = 20;
+  let buttonDimension;
+  if (display_mode === "linear") {
+    //console.log("LINE")
+    // 1 Row (4x1)
+    if (num_butts <= 4) {
+      buttonDimension = gameContainerWidth/4 - buttonMargin;
+    }
+    // 2 Rows (3x2)
+    else if (num_butts <= 6) {
+      buttonDimension = Math.min(gameContainerWidth/3, gameContainerHeight/2) - buttonMargin;
+    }
+    // 2 Rows (4x2)
+    else if (num_butts <= 8) {
+      buttonDimension = Math.min(gameContainerWidth/4, gameContainerHeight/2) - buttonMargin;
+    }
+    // 2 Rows (5x2)
+    else if (num_butts <= 10) {
+      buttonDimension = Math.min(gameContainerWidth/5, gameContainerHeight/2) - buttonMargin;
+    }
+    // 3 Rows (4x3)
+    else if (num_butts <= 12) {
+      buttonDimension = Math.min(gameContainerWidth/4, gameContainerHeight/3) - buttonMargin;
+    }
+    // 4 Rows (TODO: add 4 more buttons)
+    else {
+      // TODO
+    }
+  }
+  else if (display_mode === "square") {
+    //console.log("SQUARE")
+    if (num_butts <= 4) {
+      buttonDimension = Math.min(gameContainerWidth/2, gameContainerHeight/2) - buttonMargin;
+    }
+    else if (num_butts <= 6) {
+      buttonDimension = Math.min(gameContainerWidth/3, gameContainerHeight/2) - buttonMargin;
+    }
+    else if (num_butts <= 9) {
+      buttonDimension = Math.min(gameContainerWidth/3, gameContainerHeight/3) - buttonMargin;
+    }
+    else if (num_butts <= 12) {
+      buttonDimension = Math.min(gameContainerWidth/4, gameContainerHeight/3) - buttonMargin;
+    }
+    else {
+      // TODO
+    }
+  }
+  // Set button dimensions dynamically
+  document.querySelectorAll(".gamebutton").forEach(gamebutton => {
+    gamebutton.style.width = `${buttonDimension}px`;
+    gamebutton.style.height = `${buttonDimension}px`;
+  })
+  // Make buttonContainer visible (hidden on startup until buttons properly loaded)
+  buttonContainer.classList.remove("hidden");
+}*/
 
 
 
@@ -160,7 +257,7 @@ function toggleMode(e) {
   if (e.code === "KeyC") {gameMode = "classic";}
   else if (e.code === "KeyA") {gameMode = "advanced";}
   else {gameMode = e.target.id;}
-  document.getElementById("mode").innerHTML = "Game Mode: " + gameMode.toUpperCase();
+  document.querySelector("#gamemode-select-button").innerHTML = `${gameMode.toUpperCase().substring(0,3)}. &#9662;`;
   game_mode = gameMode;
   // Zero out current score.
   curr_score = 0;
@@ -168,12 +265,80 @@ function toggleMode(e) {
   //console.log(game_mode);
 }
 
+let gamemodeSelectButton = document.querySelector("#gamemode-select-button");
+let gamemodeSelectModalContainer = document.querySelector(".gamemode-select-modal-container");
+let gamemodeSelectModal = document.querySelector("#gamemode-select-modal");
+
+gamemodeSelectButton.onclick = (e) => {
+  gamemodeSelectModalContainer.classList.remove("hidden");
+}
+
+gamemodeSelectModalContainer.onclick = (e) => {
+  if (e.target.id !== "gamemode-select-modal") {
+    gamemodeSelectModalContainer.classList.add("hidden");
+  }
+}
+
+
+
+
+
+/* GAME STYLE (numbers of colors) EVENT LISTENERS */
+let colorsButton = document.querySelector("#colors");
+let numbersButton = document.querySelector("#numbers");
+
+colorsButton.onclick = (e) => {
+  game_type = "colors";
+  updateGameType();
+}
+numbersButton.onclick = (e) => {
+  game_type = "numbers";
+  updateGameType();
+}
+
+function updateGameType() {
+  if (game_type === "colors") {
+    document.querySelectorAll(".gamebutton").forEach(gamebutton => {
+      gamebutton.innerHTML = "";
+      gamebutton.style.backgroundColor = `var(--${gamebutton.id})`;
+    });
+  }
+  else if (game_type === "numbers") {
+    let randomUsed = new Set();
+    document.querySelectorAll(".gamebutton").forEach(gamebutton => {
+      let newRandom = Math.floor(Math.random() * 99) + 1;
+      while (randomUsed.has(newRandom)) {
+        newRandom = Math.floor(Math.random() * 99) + 1;
+      }
+      randomUsed.add(newRandom);
+      gamebutton.innerHTML = newRandom;
+      gamebutton.style.backgroundColor = "var(--grey)";
+    });
+  }
+}
+
+
+
+
+
+/* MENU MODAL TOGGLE EVENT LISTENER */
+let menuButton = document.querySelector("#menuButton");
+let menuModalContainer = document.querySelector(".menu-modal-container");
+
+menuButton.onclick = (e) => {
+  menuModalContainer.classList.remove("hidden");
+}
+menuModalContainer.onclick = (e) => {
+  if (e.target.id !== "menu-modal") {
+    menuModalContainer.classList.add("hidden");
+  }
+}
 
 
 
 
 /* GAME STATS EVENT LISTENER */
-var stats = document.getElementById('statsButton');
+/*var stats = document.getElementById('statsButton');
 stats.addEventListener('click', toggleStatsBox);
 
 function toggleStatsBox(e) {
@@ -182,20 +347,20 @@ function toggleStatsBox(e) {
   //console.log(vis);
   if (vis === 'hidden') {statsBox.style.visibility = "visible";}
   else {statsBox.style.visibility = "hidden";}
-}
+}*/
 
 
 
 
-
-/* HOTKEYS BOX EVENT LISTENER - toggle visibilty */
-var hotkeys = document.getElementById('hotkeysButton');
-hotkeys.addEventListener('click', toggleHotBox);
 
 /* UPDATEBINDINGS HELPER - If button layout changed, change default key bindings */
 function updateBindings() {
  // TODO: update bindings code here
 }
+
+// HOTKEYS BOX EVENT LISTENER - toggle visibilty
+/*var hotkeys = document.getElementById('hotkeysButton');
+hotkeys.addEventListener('click', toggleHotBox);
 
 function toggleHotBox(e) {
   var hotkeysBox = document.getElementById("hotBox");
@@ -203,9 +368,9 @@ function toggleHotBox(e) {
   //console.log(vis);
   if (vis === 'hidden') {hotkeysBox.style.visibility = "visible";}
   else {hotkeysBox.style.visibility = "hidden";}
-}
+}*/
 
-/* On Click - "stop" event listener for key presses */
+// On Click - "stop" event listener for key presses
 const hotInputs = document.getElementById("hotBox");
 hotInputs.addEventListener('click', (event) => {
   const isInput = event.target.nodeName === 'INPUT';
@@ -363,17 +528,18 @@ document.addEventListener('click', (event) => {
 
 /* LEADERBOARD BUTTON EVENT LISTENER */
 const leaderboardListener = document.getElementById("rankButton");
+const leaderboardContainer = document.querySelector(".leaderboard-container");
 const leaderboard = document.getElementById("leaderboard");
 const loading_msg = document.getElementById("leaderboard_loading_msg");
 leaderboardListener.addEventListener('click', (event) => {
-  var vis = leaderboard.style.visibility;
+  var isHidden = leaderboardContainer.classList.contains("hidden");
   // Toggle leaderboard window
-  if (vis === 'hidden') {
+  if (isHidden) {
     // TODO: keep cache of db data, only make new fetch request if player has new high score and/or after timer elapsed (1 min?)
     loading_msg.innerHTML = "Loading...";
     getLeaderboardScoresBackend(game_mode, num_butts); // TODO -- load default values if err?
-    leaderboard.style.visibility = 'visible';
-    document.body.classList.add("filterGrayscale");
+    leaderboardContainer.classList.remove("hidden");
+    //document.body.classList.add("filterGrayscale");
   }
 });
 
@@ -391,24 +557,65 @@ function formatAndRenderScoresList(userscores_data) {
   leaderboard_subtitle.innerHTML = `${game_mode.toUpperCase()} / ${num_butts}-Buttons`;
 }
 function addScoreToLeaderboardDiv(userscore_str) {
-  const leaderboard_div = document.getElementById("scores_list");
+  const leaderboard_div = document.getElementById("scores-list");
   var new_score_div = document.createElement('div');
   leaderboard_div.appendChild(new_score_div);
-  new_score_div.className = 'leaderboard_text';
+  new_score_div.className = 'leaderboard-text';
   new_score_div.innerHTML = userscore_str;
 }
 function clearLeaderboardDiv() {
-  const leaderboard_div = document.getElementById("scores_list");
+  const leaderboard_div = document.getElementById("scores-list");
   while (leaderboard_div.firstChild) {
     leaderboard_div.removeChild(leaderboard_div.lastChild);
   }
 }
 
-/* "BODY" CLICK EVENT HANDLER -- TOGGLE LEADERBOARD "OFF" */
-document.body.addEventListener('click', () => {
-  leaderboard.style.visibility = 'hidden';
-  document.body.classList.remove("filterGrayscale");
-}, true);
+/* leaderboardContainer CLICK EVENT HANDLER -- TOGGLE LEADERBOARD "OFF" */
+leaderboardContainer.onclick = () => {
+  leaderboardContainer.classList.add("hidden");
+  //document.body.classList.remove("filterGrayscale");
+};
+
+
+
+
+/* ADD/SUBTRACT GAME BUTTON LISTENERS */
+let subButton = document.querySelector("#subButton");
+let addButton = document.querySelector("#addButton");
+
+subButton.onclick = (e) => {
+  if (num_butts > 2) {
+    let targetGameButton = document.getElementById(colorMapMaster[num_butts-1]);
+    targetGameButton.style.display = "none";
+    colorMap.pop();
+    // decrement button counter
+    num_butts--;
+    document.getElementById("numButtons").innerHTML = num_butts;
+    // update hi scores
+    hi_score_cla = cla_scores[num_butts-1];
+    hi_score_adv = adv_scores[num_butts-1];
+    curr_score = 0;
+    updateScores();
+  }
+  updateDisplaySettings();
+}
+
+addButton.onclick = (e) => {
+  if (num_butts < 12) {
+    let targetGameButton = document.getElementById(colorMapMaster[num_butts]);
+    targetGameButton.style.display = "inline";
+    colorMap.push(colorMapMaster[num_butts]);
+    // increment button counter
+    num_butts++;
+    document.getElementById("numButtons").innerHTML = num_butts;
+    // update hi scores
+    hi_score_cla = cla_scores[num_butts-1];
+    hi_score_adv = adv_scores[num_butts-1];
+    curr_score = 0;
+    updateScores();
+  }
+  updateDisplaySettings();
+}
 
 
 
@@ -416,28 +623,30 @@ document.body.addEventListener('click', () => {
 /* DISPLAY BUTTONS EVENT LISTENER */
 /* Dummy linear and square button layout buttons event listener,
    Dummy Plus/Minus buttons event listener */
-const toolbuttonListener = document.getElementById("toolbar");
+/*const toolbuttonListener = document.getElementById("toolbar");
 toolbuttonListener.addEventListener('click', (event) => {
-  const isButton = event.target.nodeName === 'BUTTON';  // do click effects.
+  const target = event.target;
+  const isButton = target.nodeName === 'BUTTON';  // do click effects.
+  const actionLockedInPlay = target.classList.contains("lockedInPlay");
   var buttonID = event.target.id;
-  //console.log(buttonID);
+  console.log(target);
   var targetGameButton;
   if (!isButton) {return;}
-  if (isGameStart === 1) {
+  if (isGameStart === 1 && actionLockedInPlay) {
     alert("Game is in progress.");
     return;
   }
-  /* 'LINEAR LAYOUT' BUTTON */
+  // 'LINEAR LAYOUT' BUTTON
   if (buttonID === "linLayout" && display_mode !== "linear") {
     display_mode = "linear";
     document.getElementById("layout").innerHTML = "Layout: " + display_mode.toUpperCase();
   }
-  /* 'SQUARE LAYOUT' BUTTON */
+  // 'SQUARE LAYOUT' BUTTON
   else if (buttonID === "sqLayout" && display_mode !== "square") {
     display_mode = "square";
     document.getElementById("layout").innerHTML = "Layout: " + display_mode.toUpperCase();
   }
-  /* 'ADD' BUTTON */
+  // 'ADD' BUTTON
   else if (buttonID === "addButton" && num_butts < 12) {
     targetGameButton = document.getElementById(colorMapMaster[num_butts]);
     targetGameButton.style.display = "inline";
@@ -451,7 +660,7 @@ toolbuttonListener.addEventListener('click', (event) => {
     curr_score = 0;
     updateScores();
   }
-  /* 'SUBTRACT' BUTTON */
+  // 'SUBTRACT' BUTTON
   else if (buttonID === "subButton" && num_butts > 2) {
     targetGameButton = document.getElementById(colorMapMaster[num_butts-1]);
     targetGameButton.style.display = "none";
@@ -466,4 +675,4 @@ toolbuttonListener.addEventListener('click', (event) => {
     updateScores();
   }
   updateDisplaySettings();
-});
+});*/

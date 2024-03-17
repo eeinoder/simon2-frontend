@@ -4,79 +4,152 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--meta http-equiv="X-UA-Compatible" content="ie=edge-->
-  <title>Simone Game</title>
+  <title>Memio</title>
   <link rel="stylesheet" href="style/stylesheet.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 
-<h1 id="title" class="noselect title_text">Simone</h1>
+<h1 id="title" class="noselect title_text">Memio</h1>
 
-<div id="headertools">
+<div id="headerbar">
   <!-- button class="toolbutton headertool floatR" id="muteButton"></button-->
   <!--button class="toolbutton headertool floatR hidden" id="unmuteButton"></button-->
   <!--button class="toolbutton headertool floatR" id="saveOnButton"></button-->
   <!--button class="toolbutton headertool floatR hidden" id="saveOffButton"></button-->
-</div>
-
-<div id="toolbar">
-  <button class="toolbutton gray" id="rankButton"></button>
-  <button class="toolbutton gray" id="subButton"></button>
-  <button class="toolbutton gray" id="addButton"></button>
-  <button class="toolbutton gray floatR" id="sqLayout"></button>
-  <button class="toolbutton gray floatR" id="linLayout"></button>
-
-  <!-- LEADERBOARD WINDOW -->
-  <div id="leaderboard" style="visibility:hidden">
-    <div class="leaderboard_text" id="leaderboard_title">GLOBAL LEADERBOARD</div>
-    <div class="leaderboard_text" id="leaderboard_subtitle">Classic / 4-Buttons</div>
-    <div class="leaderboard_text" id="leaderboard_loading_msg">Loading...</div>
-    <div id="scores_list">
-    </div>
-  </div>
-
-</div>
-
-<div id="gamecontainer">
-
-  <!-- START & GAME M0DE BUTTONS, AND SCORE CARDS -->
-  <div id="config">
-    <button class="otherbutton" id="start">Start</button>
-
-    <button class="otherbutton floatR" id="help">?</button>
-    <button class="otherbutton floatR" id="advanced">Advanced</button>
-    <button class="otherbutton floatR" id="classic">Classic</button>
-    <p class="info" id="hi-score">High Score:</p>
-    <span class="info modeButton floatR" id="mode">Game Mode:</span>
-    <p class="info" id="score">Score:</p>
-    <span class="info modeButton floatR" id="layout">Layout:</span>
+  <div class="usrid-container">
     <label class="usrid label" for="usridText" id="usridLabel">User:</label>
     <input class="usrid text" type="text" id="usridText" name="usridText" value="TMP">
   </div>
+  <div class="current-scores-container">
+    <span class="info" id="hi-score">High Score:</span>
+    <span class="info" id="score">Score:</span>
+  </div>
+</div>
 
+<div id="toolbar">
+  <div class="toolbutton-container">
+    <button class="toolbutton" id="start"><span>Start</span></button>
+    <button class="toolbutton" id="gamemode-select-button">Classic &#9662;</button>
+  </div>
+  <div class="toolbutton-container">
+    <button class="toolbutton lockedInPlay white" id="subButton"><img src="style/icons/minus.svg"></button>
+    <button class="toolbutton lockedInPlay white" id="addButton"><img src="style/icons/plus.svg"></button>
+  </div>
+  <div class="toolbutton-container">
+    <button class="toolbutton white" id="rankButton"><img src="style/icons/podium_minimal.svg"></button>
+    <button class="toolbutton white" id="menuButton"><img src="style/icons/lines_sharp.svg"></button>
+  </div>
 
-  <!-- GAME BUTTONS -->
-  <div align="center" class="noselect" id="buttons">
-    <div id="button-container">
-      <button class="gamebutton" id="red"></button>
-      <button class="gamebutton" id="green"></button>
-      <button class="gamebutton" id="blue"></button>
-      <button class="gamebutton" id="yellow"></button>
-      <button class="gamebutton hidden" id="cyan"></button>
-      <button class="gamebutton hidden" id="lavender"></button>
-      <button class="gamebutton hidden" id="pumpkin"></button>
-      <button class="gamebutton hidden" id="violet"></button>
-      <button class="gamebutton hidden" id="purple"></button>
-      <button class="gamebutton hidden" id="pink"></button>
-      <button class="gamebutton hidden" id="navy"></button>
-      <button class="gamebutton hidden" id="orange"></button>
-    </div>
+  <!-- TODO: REMOVE IMPLEMENTATION OF SQUARE/LINEAR LAYOUT -->
+  <!--button class="toolbutton white floatR" id="sqLayout"></button>
+  <button class="toolbutton white floatR" id="linLayout"></button-->
+
+</div>
+
+<!-- LEADERBOARD MODAL -->
+<div class="leaderboard-container hidden">
+  <div id="leaderboard">
+    <div class="leaderboard-text" id="leaderboard_title">GLOBAL LEADERBOARD</div>
+    <div class="leaderboard-text" id="leaderboard_subtitle">Classic / 4-Buttons</div>
+    <div class="leaderboard-text" id="leaderboard_loading_msg">Loading...</div>
+    <div id="scores-list">
     </div>
   </div>
+</div>
+
+<!-- MENU MODAL -->
+<div class="menu-modal-container hidden">
+  <div id="menu-modal">
+    <div>PLAYER STATS</div>
+    <div id="statsBox">
+      <div class="space-between">
+        <p class="settings">Button Level:</p>
+        <span id="numButtons"><span>
+      </div>
+      <div class="space-between">
+        <p class="settings">High Score (Classic):</p>
+        <span id="hiScoreCla"><span>
+      </div>
+      <div class="space-between">
+        <p class="settings">High Score (Advanced):</p>
+        <span id="hiScoreAdv"><span>
+      </div>
+      <div class="space-between">
+        <p class="settings">Games Played:</p>
+        <span id="numGames"><span>
+      </div>
+      <div class="space-between">
+        <p class="settings">Buttons Clicked:</p>
+        <span id="numClicks"><span>
+      </div>
+    </div>
+    <div>HOT KEYS</div>
+    <form id="hotBox">
+      <div class="space-between">
+        <label class="hotkeysBox label" for="red">Red:</label>
+        <input class="hotkeysBox text" type="text" id="redText" name="red" value="U">
+      </div>
+      <div class="space-between">
+        <label class="hotkeysBox label" for="green">Green:</label>
+        <input class="hotkeysBox text" type="text" id="greenText" name="green" value="I">
+      </div>
+      <div class="space-between">
+        <label class="hotkeysBox label" for="blue">Blue:</label>
+        <input class="hotkeysBox text" type="text" id="blueText" name="blue" value="O">
+      </div>
+      <div class="space-between">
+        <label class="hotkeysBox label" for="yellow">Yellow:</label>
+        <input class="hotkeysBox text" type="text" id="yellowText" name="yellow" value="P">
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- GAME MODE SELECT MODAL -->
+<div class="gamemode-select-modal-container hidden">
+  <div id="gamemode-select-modal">
+    <div>Game Mode:</div><br>
+    <button class="otherbutton" id="classic">Classic</button>
+    <button class="otherbutton" id="advanced">Advanced</button>
+    <!-- NOTE: 'help' button not being used atm -->
+    <button class="otherbutton hidden" id="help">?</button>
+    <div>Play 'Classic' for a familiar 'Simon-says' style memory recall game.</div>
+    <div>Play 'Advanced' for an extra challenge. Only the last button in the sequence will be shown.</div><br>
+    <div>Game Style</div><br>
+    <button class="otherbutton" id="colors">Colors</button>
+    <button class="otherbutton" id="numbers">Numbers</button>
+    <div>Select 'Colors' for a color-sequence matching game.</div>
+    <div>Select 'Numbers' for a random number-sequence game</div>
+    <!-- NOTE: bottom span is not being used atm -->
+    <span class="info modeButton floatR hidden" id="layout">Layout:</span>
+  </div>
+</div>
+
+
+
+
+<div id="gamecontainer">
+  <!-- GAME BUTTONS -->
+  <div id="button-container" class="noselect hidden" align="center">
+    <button class="gamebutton noselect" id="red"></button>
+    <button class="gamebutton noselect" id="green"></button>
+    <button class="gamebutton noselect" id="blue"></button>
+    <button class="gamebutton noselect" id="yellow"></button>
+    <button class="gamebutton noselect hidden" id="cyan"></button>
+    <button class="gamebutton noselect hidden" id="lavender"></button>
+    <button class="gamebutton noselect hidden" id="pumpkin"></button>
+    <button class="gamebutton noselect hidden" id="violet"></button>
+    <button class="gamebutton noselect hidden" id="purple"></button>
+    <button class="gamebutton noselect hidden" id="pink"></button>
+    <button class="gamebutton noselect hidden" id="navy"></button>
+    <button class="gamebutton noselect hidden" id="orange"></button>
+  </div>
+</div>
 
 
   <!-- STATS AND HOTKEYS -->
-  <div id=statsAndKeys>
+  <!--div id=statsAndKeys>
     <div id="stats">
       <button class="otherbutton settings" id="statsButton">Player Stats:</button>
       <div class="hotkeys floatR">
@@ -100,9 +173,9 @@
         <p class="settings">Buttons Clicked:<span id="numClicks" style="padding-left:5.7vw"><span></p>
       </div>
     </div>
-  </div>
+  </div-->
 
-  <h2 id="subtitle" class="noselect title_text footer">by: Nicolae E.</h2>
+  <h2 id="subtitle" class="noselect title_text">by: Nicolae E.</h2>
 </div>
 
 
